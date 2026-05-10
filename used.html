@@ -322,7 +322,7 @@ nav a:hover, nav a.active {
     </main>
 
     <script>
-        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbzQD7kkkLWk_CxXzzgxx56B7b4sF9FoqS5F8HA8A2YHxHgYvY5W7i8M7eNNT_Jvlvq25g/exec"; 
+        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbzatTg8qEIxz5UA-vIcM--RNYo6GEyiPUX9cULSZwQBJmsLYXFmqfkDoEbhDQOA9w7xzA/exec"; 
         
         let allCars = [];
         let currentSort = 'new';
@@ -409,7 +409,7 @@ nav a:hover, nav a.active {
                                     【${car.販売状況}】
                                 </span><br>
                                 ${isSold ? 
-                                    '<span class="btn-buy disabled">購入不可</span>' : 
+                                    '<span class="btn-buy disabled">売約済み</span>' : 
                                     `<a href="${car.購入リンク}" class="btn-buy" target="_blank">買う</a>`
                                 }
                             </div>
