@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPEK-Group Gallery</title>
+    <style>
+        /* --- 車両一覧のベースデザインを完全継承 --- */
+        body {
+            background-color: #121212;
+            color: #eeeeee;
+            margin: 0;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        /* --- ヘッダー（バー）：車両一覧の数値を完全移植 --- */
+        header {
+            background-color: #1a1a1a;
+            border-bottom: 1px solid #333;
+            padding: 10px 50px; /* 車両一覧と同じ余白 */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        .logo {
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 1.5rem; /* 車両一覧と同じサイズ */
+            text-decoration: none;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px; /* 車両一覧の構成に合わせる */
+            padding: 0;
+            margin: 0;
+        }
+
+        nav a {
+            color: #cccccc;
+            text-decoration: none;
+            transition: 0.3s;
+            font-size: 14px; /* 車両一覧に合わせる */
+        }
+
+        nav a:hover, nav a.active {
+            color: #ff0000;
+            border-bottom: 2px solid #ff0000;
+        }
+
+        /* 予約ボタン：車両一覧と全く同じスタイル */
+        .btn-booking {
+            background-color: transparent;
+            color: #ff0000;
+            border: 1px solid #ff0000;
+            padding: 8px 15px; /* 車両一覧の 8px 15px を維持 */
+            text-decoration: none;
+            border-radius: 4px;
+            transition: 0.3s;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .btn-booking:hover {
+            background-color: #ff0000;
+            color: #000;
+        }
+
+        /* --- ギャラリー用コンテンツ設定 --- */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .page-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 40px;
+            letter-spacing: 4px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .gallery-card {
+            background-color: #1a1a1a;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #333;
+            transition: 0.3s ease;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-5px);
+            border-color: #ff0000;
+        }
+
+        .image-box {
+            width: 100%;
+            height: 200px;
+            background-color: #000;
+            overflow: hidden;
+        }
+
+        .image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .info-box {
+            padding: 20px;
+        }
+
+        .info-title {
+            font-size: 1.2rem;
+            color: #ffffff;
+            margin: 0 0 10px 0;
+            font-weight: bold;
+        }
+
+        .info-desc {
+            font-size: 0.9rem;
+            color: #aaa;
+            line-height: 1.6;
+        }
+
+        #loading-message {
+            text-align: center;
+            color: #ff0000;
+            padding: 50px;
+        }
+
+        /* --- 魔法のレスポンシブ：車両一覧の挙動を完全移植 --- */
+        @media screen and (max-width: 768px) {
+            header {
+                padding: 10px !important;
+                flex-direction: column !important;
+                height: auto !important;
+                gap: 10px !important;
+            }
+
+            nav ul {
+                justify-content: center !important;
+                gap: 15px !important;
+                padding: 0 !important;
+            }
+
+            nav a {
+                font-size: 14px !important;
+                padding-bottom: 5px !important;
+            }
+
+            /* 予約ボタン：車両一覧の「width: 100%」設定を完全一致 */
+            .btn-booking {
+                width: 100% !important;
+                text-align: center !important;
+                box-sizing: border-box !important;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">MPEK Group</a>
+        <nav>
+            <ul>
+                <li><a href="index.html">ホーム</a></li>
+                <li><a href="car.html">販売車両</a></li>
+                <li><a href="used.html">中古車</a></li>
+                <li><a href="gallery.html" class="active">ギャラリー</a></li>
+            </ul>
+        </nav>
+        <a href="https://docs.google.com/forms/d/1zPGI6HD4iRVSvvlWbTxiSdbSgxjjRqCrUDru-jT1QO8/viewform" class="btn-booking">予約する</a>
+    </header>
+
+    <main class="container">
+        <h1 class="page-title">GALLERY</h1>
+        
+        <div id="loading-message">読み込み中...</div>
+        <div id="gallery-container" class="gallery-grid"></div>
+    </main>
+
+    <script>
+        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbzQD7kkkLWk_CxXzzgxx56B7b4sF9FoqS5F8HA8A2YHxHgYvY5W7i8M7eNNT_Jvlvq25g/exec?action=getGallery";
+
+        async function loadGallery() {
+            const container = document.getElementById('gallery-container');
+            const loading = document.getElementById('loading-message');
+
+            try {
+                const response = await fetch(GAS_API_URL);
+                const data = await response.json();
+                
+                loading.style.display = 'none';
+
+                if (!Array.isArray(data) || data.length === 0) {
+                    loading.innerText = "表示できる画像がありません。";
+                    return;
+                }
+
+                data.forEach(item => {
+                    if (!item.id) return;
+
+                    const card = document.createElement('div');
+                    card.className = 'gallery-card';
+
+                    const imgUrl = item.url || "https://placehold.jp/24/333333/ffffff/400x250.png?text=No%20Image";
+
+                    card.innerHTML = `
+                        <div class="image-box">
+                            <img src="${imgUrl}" alt="${item.title}" onerror="this.src='https://placehold.jp/24/333333/ffffff/400x250.png?text=Error'">
+                        </div>
+                        <div class="info-box">
+                            <h2 class="info-title">${item.title || 'Untitled'}</h2>
+                            <p class="info-desc">${item.description || ''}</p>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            } catch (error) {
+                console.error(error);
+                loading.innerText = "データの取得に失敗しました。";
+            }
+        }
+
+        window.onload = loadGallery;
+    </script>
+</body>
+</html>
