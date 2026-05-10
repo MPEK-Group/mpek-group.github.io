@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>野見山委員会 対策グッズ</title>
+    <title>MPEK-Group Car</title>
     <link rel="stylesheet" href="style.css">
     <style>
 /* --- 全体設定 --- */
@@ -289,12 +289,12 @@ nav a:hover, nav a.active {
 </head>
 <body>
     <header>
-        <div class="logo">野見山委員会</div>
+        <div class="logo">MPEK Grouop</div>
         <nav>
             <ul>
                 <li><a href="index.html">ホーム</a></li>
-                <li><a href="shop.html" class="active">対策グッズ</a></li>
-                <li><a href="news.html">研究や発表</a></li>
+                <li><a href="car.html" class="active">販売車両</a></li>
+                <li><a href="used.html">中古車</a></li>
           </ul>
         </nav>
 <a href="https://nomiyama-virus.github.io/nice.html" class="btn-booking">予約する</a>
@@ -322,7 +322,7 @@ nav a:hover, nav a.active {
     </main>
 
     <script>
-        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbweQRNKjXqpmGfb-E6uTp2TL7xhRgqWL99IdyEgeutGi-sCV57lP_dnKb6q6qR1TFdxGw/exec"; 
+        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbzQD7kkkLWk_CxXzzgxx56B7b4sF9FoqS5F8HA8A2YHxHgYvY5W7i8M7eNNT_Jvlvq25g/exec"; 
         
         let allCars = [];
         let currentSort = 'new';
@@ -402,7 +402,7 @@ nav a:hover, nav a.active {
                         <img src="${safeImg}" alt="${car.車名}" class="car-image" onerror="this.src='https://placehold.jp/24/cccccc/ffffff/400x250.png?text=Image%20Error'">
                         <div class="car-details">
                             <h2 class="car-name">${car.車名}</h2>
-                            <p class="car-price">価格: ${car.価格}<span class="currency-label">ノミドル</span></p>
+                            <p class="car-price">価格: ${car.価格}<span class="currency-label">CR</span></p>
                             <p class="car-spec">${car.備考 === 'あ' ? '' : car.備考}</p>
                             <div class="purchase-area">
                                 <span class="car-status ${isSold ? 'status-sold' : 'status-onsale'}">
@@ -410,7 +410,7 @@ nav a:hover, nav a.active {
                                 </span><br>
                                 ${isSold ? 
                                     '<span class="btn-buy disabled">購入不可</span>' : 
-                                    `<a href="${car.購入リンク}" class="btn-buy" target="_blank">買う【1ノミドル＝0円】</a>`
+                                    `<a href="${car.購入リンク}" class="btn-buy" target="_blank">買う</a>`
                                 }
                             </div>
                         </div>
