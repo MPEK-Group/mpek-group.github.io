@@ -1,295 +1,283 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MPEK-Group</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        /* --- アニメーションの定義 --- */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes heroFade {
-            0% { 
-                opacity: 0; 
-                transform: scale(1.1); 
-            }
-            100% { 
-                opacity: 1; 
-                transform: scale(1); 
-            }
-        }
-
-        .fade-in {
-            opacity: 0; /* 最初は隠す */
-            animation: fadeInUp 0.8s ease-out forwards;
-        }
-
-        /* --- セクションごとの遅延設定 --- */
-        .delay-1 { animation-delay: 0.2s; }
-        .delay-2 { animation-delay: 0.5s; }
-        .delay-3 { animation-delay: 0.8s; }
-        .delay-img { animation-delay: 1.0s; }
-
-        /* --- ヒーロー・背景設定 --- */
-        #hero {
-            height: 80vh;
-            min-height: 500px; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            background: #000;
-        }
-
-        /* スマホ・PC共通：実体としての背景レイヤー */
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
-                              url('https://www.image2url.com/r2/default/images/1778401442371-5c42f4dc-e7f5-4f27-b07e-051dda7949db.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            z-index: 1;
-            opacity: 0;
-            animation: heroFade 1.5s ease-in-out 0.8s forwards;
-            will-change: opacity, transform;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            width: 90%;
-        }
-
-        header {
-            z-index: 100 !important;
-        }
-
-        .hero-content h1 {
-            font-size: 3.5rem;
-            margin-bottom: 10px;
-            letter-spacing: 2px;
-        }
-
-        .cyan-box {
-            width: 60px;
-            height: 5px;
-            background-color: #ff0000;
-            margin: 20px auto;
-        }
-
-        .concept-section {
-            padding: 100px 20px;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .concept-grid {
-            display: flex;
-            align-items: center;
-            gap: 50px;
-            flex-wrap: wrap;
-        }
-
-        .concept-text {
-            flex: 1;
-            min-width: 300px;
-        }
-
-        .concept-text h2 {
-            font-size: 2.5rem;
-            color: #ff0000;
-            margin-bottom: 20px;
-        }
-
-        .concept-text p {
-            line-height: 2;
-            color: #ccc;
-            font-size: 1.1rem;
-        }
-
-        .concept-image {
-            flex: 1;
-            min-width: 300px;
-        }
-
-        .concept-image img {
-            width: 100%;
-            border-radius: 12px;
-            border: 1px solid #333;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
-        }
-
-        .cta-banner {
-            background-color: #1a1a1a;
-            padding: 80px 20px;
-            text-align: center;
-            border-top: 1px solid #333;
-        }
-
-        .cta-banner h2 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-        }
-
-        footer {
-            padding: 40px;
-            text-align: center;
-            font-size: 0.8rem;
-            color: #555;
-            border-top: 1px solid #222;
-        }
-
-        /* --- 魔法のレスポンシブ --- */
-        @media screen and (max-width: 768px) {
-            header {
-                padding: 10px !important;
-                flex-direction: column !important;
-                height: auto !important;
-                gap: 10px !important;
-            }
-
-            nav ul {
-                justify-content: center !important;
-                gap: 15px !important;
-                padding: 0 !important;
-            }
-
-            nav a {
-                font-size: 14px !important;
-                padding-bottom: 5px !important;
-            }
-
-            .btn-booking {
-                width: 100% !important;
-                text-align: center !important;
-                box-sizing: border-box !important;
-            }
-
-            .car-card {
-                flex-direction: column !important;
-                width: 95% !important;
-                max-width: 400px !important;
-                height: auto !important;
-                margin: 10px auto !important;
-                padding: 15px !important;
-                align-items: center !important;
-            }
-
-            .car-image {
-                width: 100% !important;
-                height: auto !important;
-                margin: 0 0 15px 0 !important;
-            }
-
-            .car-details {
-                width: 100% !important;
-                text-align: center !important;
-                align-items: center !important;
-            }
-
-            .car-name {
-                max-width: 100% !important;
-                white-space: normal !important;
-                font-size: 1.2rem !important;
-            }
-
-            .car-spec {
-                text-align: left !important;
-                font-size: 13px !important;
-                width: 100% !important;
-            }
-
-            .controls {
-                flex-direction: column !important;
-                gap: 10px !important;
-                margin: 10px !important;
-            }
-            
-            .controls-group {
-                display: flex !important;
-                flex-wrap: wrap !important;
-                justify-content: center !important;
-            }
-
-            #hero {
-                height: 70vh; 
-                min-height: 400px;
-            }
-            .hero-content h1 {
-                font-size: 2rem !important;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MPEK Group | Official Site</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; }
+    :root {
+      --bg-dark: #0a0a0c;
+      --bg-card: #141419;
+      --primary-red: #ff1e27;
+      --primary-red-hover: #e00009;
+      --text-white: #ffffff;
+      --text-gray: #a0a0ab;
+      --accent-glow: rgba(255, 30, 39, 0.4);
+      --font-en: 'Orbitron', sans-serif;
+      --font-main: 'Noto Sans JP', sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      font-family: var(--font-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    header {
+      position: fixed; top: 0; left: 0; width: 100%; padding: 20px 40px;
+      display: flex; justify-content: space-between; align-items: center; z-index: 1000;
+      background: linear-gradient(180deg, rgba(10,10,12,0.9) 0%, rgba(10,10,12,0) 100%);
+      backdrop-filter: blur(8px);
+    }
+    .logo {
+      font-family: var(--font-en); font-size: 1.5rem; font-weight: 900;
+      letter-spacing: 2px; color: var(--text-white); font-style: italic;
+    }
+    .logo span { color: var(--primary-red); }
+    nav ul { display: flex; list-style: none; gap: 25px; }
+    nav a {
+      font-family: var(--font-en); font-size: 0.85rem; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase; transition: color 0.3s;
+    }
+    nav a:hover { color: var(--primary-red); }
+    .hero {
+      position: relative; height: 100vh; display: flex; align-items: center;
+      justify-content: center; text-align: center;
+      background: linear-gradient(135deg, rgba(10,10,12,0.7) 0%, rgba(10,10,12,0.95) 100%),
+                  url('https://i.ibb.co/vC4wbBFD/198-20260807111359.png') center/cover no-repeat;
+      background-attachment: fixed;
+    }
+    .hero-content { max-width: 900px; padding: 0 20px; z-index: 2; }
+    .hero-title {
+      font-family: var(--font-en); font-size: 4rem; font-weight: 900;
+      font-style: italic; letter-spacing: 4px; text-transform: uppercase;
+      line-height: 1.1; margin-bottom: 15px; text-shadow: 0 0 20px rgba(0,0,0,0.8);
+      color: var(--text-white);
+    }
+    .hero-title span { color: var(--primary-red); text-shadow: 0 0 25px var(--accent-glow); }
+    .hero-subtitle { font-size: 1.1rem; color: var(--text-gray); margin-bottom: 30px; letter-spacing: 2px; }
+    .btn-racing {
+      display: inline-block; padding: 14px 36px; background: var(--primary-red);
+      color: var(--text-white); font-family: var(--font-en); font-weight: 700;
+      font-style: italic; letter-spacing: 2px; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+      transition: all 0.3s ease; box-shadow: 0 0 15px var(--accent-glow);
+    }
+    .btn-racing:hover {
+      background: var(--primary-red-hover); transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 0 25px var(--accent-glow);
+    }
+    section { padding: 100px 20px; max-width: 1100px; margin: 0 auto; }
+    .section-title {
+      font-family: var(--font-en); font-size: 2.2rem; font-weight: 900;
+      font-style: italic; text-transform: uppercase; margin-bottom: 50px;
+      display: flex; align-items: center; gap: 15px;
+    }
+    .section-title::before {
+      content: ''; display: block; width: 8px; height: 35px;
+      background: var(--primary-red); transform: skewX(-15deg);
+    }
+    .fade-in {
+      opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    .about-box {
+      background: var(--bg-card); border-left: 4px solid var(--primary-red);
+      padding: 40px; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .about-box p { font-size: 1.05rem; margin-bottom: 15px; color: #d1d1d6; }
+    .projects-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;
+    }
+    .card {
+      background: var(--bg-card); border: 1px solid #22222a; border-radius: 8px;
+      overflow: hidden; transition: transform 0.3s, border-color 0.3s;
+    }
+    .card:hover { transform: translateY(-5px); border-color: var(--primary-red); }
+    .card-body { padding: 30px; }
+    .card-tag {
+      font-family: var(--font-en); font-size: 0.75rem; color: var(--primary-red);
+      font-weight: 700; letter-spacing: 1px; margin-bottom: 10px; display: block;
+    }
+    .card-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 15px; }
+    .card-desc { font-size: 0.95rem; color: var(--text-gray); margin-bottom: 20px; }
+    .timeline { position: relative; border-left: 2px solid #22222a; padding-left: 30px; margin-left: 10px; }
+    .timeline-item { position: relative; margin-bottom: 40px; }
+    .timeline-item::before {
+      content: ''; position: absolute; left: -36px; top: 5px; width: 10px; height: 10px;
+      background: var(--primary-red); border-radius: 50%; box-shadow: 0 0 10px var(--accent-glow);
+    }
+    .timeline-date { font-family: var(--font-en); font-size: 0.9rem; color: var(--primary-red); font-weight: 700; margin-bottom: 5px; }
+    .timeline-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 5px; }
+    .timeline-desc { font-size: 0.9rem; color: var(--text-gray); }
+    .tools-wrapper { display: grid; gap: 40px; }
+    .tool-box {
+      background: var(--bg-card); padding: 35px; border-radius: 8px;
+      border: 1px solid #22222a; text-align: center;
+    }
+    .tool-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 20px; }
+    .external-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+    .link-card {
+      background: var(--bg-card); padding: 20px; border-radius: 6px;
+      border: 1px solid #22222a; display: flex; align-items: center; justify-content: space-between;
+      transition: all 0.3s;
+    }
+    .link-card:hover { border-color: var(--primary-red); background: #1a1a22; }
+    .contact-box { text-align: center; background: var(--bg-card); padding: 50px 20px; border-radius: 8px; border: 1px solid #22222a; }
+    footer { text-align: center; padding: 40px 20px; border-top: 1px solid #1a1a22; color: var(--text-gray); font-size: 0.85rem; font-family: var(--font-en); }
+    @media (max-width: 768px) {
+      header { padding: 12px 15px; flex-direction: column; gap: 10px; }
+      nav ul { gap: 12px; flex-wrap: wrap; justify-content: center; }
+      nav a { font-size: 0.75rem; }
+      .hero-title { font-size: 2.2rem; letter-spacing: 2px; }
+      .hero-subtitle { font-size: 0.95rem; }
+      section { padding: 60px 20px; }
+      .about-box { padding: 25px 20px; }
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <div class="logo">MP<span>EK</span> GROUP</div>
+    <nav>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#history">History</a></li>
+        <li><a href="Tools.html">Tools</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <header>
-        <div class="logo">MPEK Group</div>
-        <nav>
-            <ul>
-                <li><a href="index.html" class="active">ホーム</a></li>
-                <li><a href="car.html">販売車両</a></li>
-                <li><a href="used.html">中古車</a></li>
-                <li><a href="gallery.html">ギャラリー</a></li>
-            </ul>
-        </nav>
-    </header>
+  <div class="hero">
+    <div class="hero-content fade-in">
+      <h1 class="hero-title">MP<span>EK</span> GROUP</h1>
+      <p class="hero-subtitle">Car Parking Multiplayer - 架空車事業のサポート企業。</p>
+      <a href="#projects" class="btn-racing">VIEW WORKS</a>
+    </div>
+  </div>
 
-    <main>
-        <section id="hero">
-            <div class="hero-bg"></div>
+  <section id="about" class="fade-in">
+    <h2 class="section-title">ABOUT US</h2>
+    <div class="about-box">
+      <p>MPEK Group（エムペックグループ）は、スマホゲーム「Car Parking Multiplayer（カーパーキング）」の架空車事業を中心に活動する開発・クリエイティブチームです。</p>
+      <p>事業全体の利便性向上や新しい体験の創出を目指し、Webサービス構築や各種ツールの開発・運営を行っています。</p>
+    </div>
+  </section>
 
-            <div class="hero-content fade-in delay-1">
-                <h1>MPEK<br>Group</h1>
-                <div class="cyan-box"></div>
-                <p style="margin-bottom: 30px; color: #aaa;>"CarParking Original Car"</p>
-                <a href="car.html" class="btn-main">販売車両を見る</a>
-            </div>
-            <div class="scroll-down fade-in delay-1">▼</div>
-        </section>
+  <section id="projects" class="fade-in">
+    <h2 class="section-title">PROJECTS</h2>
+    <div class="projects-grid">
 
-        <section class="concept-section">
-            <div class="concept-grid">
-                <div class="concept-text fade-in delay-2">
-                    <h2>カーパーキングの<br>架空車メーカー</h2>
-                    <p>
-                        NCGでの１年間の技術を活かした<br>
-                        スピードと安定性にこだわった<br>
-                        架空車メーカー
-                    </p>
-               </div>
-                <div class="concept-image fade-in delay-img">
-                    <img src="https://www.image2url.com/r2/default/images/1778414076851-d3613c68-2815-4489-986b-5f8bf9e2d14b.png" alt="icon">
-                </div>
-        </section>
+      <div class="card">
+        <div class="card-body">
+          <span class="card-tag">WEB SERVICE</span>
+          <h3 class="card-title">架空車街</h3>
+          <p class="card-desc">CPM架空車販売のための総合ポータルサイト。分散していた車両販売情報を一箇所に集約し、スムーズな注文導線を実現。</p>
+          <a href="https://cpmcarshop.github.io" target="_blank" class="btn-racing" style="font-size: 0.8rem; padding: 8px 20px;">VISIT SITE</a>
+        </div>
+      </div>
 
-        <section class="cta-banner fade-in delay-3">
-            <h2>中古車販売</h2>
-            <p style="color: #888; margin-bottom: 30px;">MPEK USED</p>
-            <a href="used.html" class="btn-main" style="background: transparent; border: 1px solid #ff0000; color: #ff0000;">見る</a>
-        </section>
-    </main>
+      <div class="card">
+        <div class="card-body">
+          <span class="card-tag">SUPPORT</span>
+          <h3 class="card-title">MPEK Fund</h3>
+          <p class="card-desc">架空車企業向けの資金支援サービス。
+大きなプロジェクトの企画や車両の開発向けに、
+MPEK Groupが資金を支援します。</p>
+          <a href="https://twitter.com/messages/compose?recipient_id=2041486360758865920" target="_blank" class="btn-racing" style="font-size: 0.8rem; padding: 8px 20px;">ご相談はDMまで</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <footer>
-        <p>2026 MPEK Group</p>
-    </footer>
+  <section id="history" class="fade-in">
+    <h2 class="section-title">HISTORY</h2>
+    <div class="timeline">
 
+      <div class="timeline-item">
+        <div class="timeline-date">2026/7/31</div>
+        <div class="timeline-title">架空車街 サービス開始。</div>
+        <div class="timeline-desc">CPM架空車販売のための総合ポータルサイトを設立。
+分散していた車両販売情報を一箇所に集約し、スムーズな注文導線を実現させた。</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">2026/7/31</div>
+        <div class="timeline-title">MPEK Group 架空車販売事業から撤退。</div>
+        <div class="timeline-desc">赤字や利益低下などにより経営が困難と判断し、MPEK Groupは架空車の販売事業から撤退した。
+同時にMPEK USEDでの中古車事業からも撤退した。今後のMPEK Groupでは架空車事業のサポート企業という体制にシフトチェンジした。</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">2025/9/27</div>
+        <div class="timeline-title">MPEK Group 始動。</div>
+        <div class="timeline-desc">NCGから名前も経営体制も新しくなった。
+一か月後には、C-PACT,SX,M100の3台が発表された。</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">2025/8</div>
+        <div class="timeline-title">NCG 架空車事業から撤退。</div>
+        <div class="timeline-desc">販売利益の低下などにより経営が困難と判断し、NCGは架空車事業から一度撤退した。</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">2024/6/12</div>
+        <div class="timeline-title">Nerissimo Car Group 始動。</div>
+        <div class="timeline-desc">創業者 ぱあ が初の架空車事業に参戦。
+</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tools" class="fade-in">
+    <h2 class="section-title">TOOLS</h2>
+    <div class="tools-wrapper">
+      <div class="tool-box">
+        <div class="tool-title">🛠️ MPEK TOOLS</div>
+        <p style="color: var(--text-gray); font-size: 0.95rem; margin-bottom: 25px;">
+          車両開発用などの便利ツールは専用ページにて公開しています。
+        </p>
+        <a href="Tools.html" class="btn-racing">OPEN TOOLS PAGE</a>
+      </div>
+      <div>
+        <h3 style="margin-bottom: 15px; font-size: 1.1rem; color: var(--text-gray);">RECOMMENDED EXTERNAL TOOLS</h3>
+        <div class="external-links">
+          <a href="https://cpmcarshop.github.io" target="_blank" class="link-card">
+            <span>架空車街 ポータル</span>
+            <span style="color: var(--primary-red);">↗</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="fade-in">
+    <h2 class="section-title">CONTACT</h2>
+    <div class="contact-box">
+      <p style="font-size: 1.1rem; margin-bottom: 25px;">お問い合わせやご意見は、公式TwitterのDMまでお願いいたします。</p>
+      <a href="https://x.com/MPEK_Group" target="_blank" class="btn-racing">Twitter @MPEK_Group)</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; MPEK Group. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
